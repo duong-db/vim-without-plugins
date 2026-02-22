@@ -110,7 +110,10 @@ function! OpenNetrwHere() abort
 
   " Move the cursor to the position of the previously opened file
   if l:file != ''
-    call search('^' . escape(l:file, '\.^$*[]') . '$', 'wc')
+    let l:pattern = '\%(^\%(| \)*\|\s\+\)\zs'
+          \ . escape(l:file, '\.^$*[]~')
+          \ . '[/*|@=]\=\%($\|\s\+\)'
+    call search(l:pattern, 'wc')
   endif
 endfunction
 
